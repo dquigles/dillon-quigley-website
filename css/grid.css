@@ -1,0 +1,77 @@
+#grid-container {
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  position: relative;
+}
+
+#lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#grid {
+  z-index: 2;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, var(--cell-size));
+  gap: var(--grid-gap);
+}
+
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  background-color: var(--background-color);
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-medium);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.05s ease, background-color 0.2s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.cell:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.selected {
+  background-color: var(--selected-color);
+}
+
+.found {
+  background-color: var(--found-color);
+  pointer-events: none;
+}
+
+.spangram {
+  background-color: var(--spangram-color) !important;
+  color: black !important;
+}
+
+#wordDisplay {
+  font-size: var(--font-size-medium);
+  font-weight: bold;
+  margin-top: 15px;
+  min-height: 1.2em;
+  text-align: center;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+#wordCounter {
+  margin-top: 20px;
+  font-size: var(--font-size-small);
+  text-align: center;
+}

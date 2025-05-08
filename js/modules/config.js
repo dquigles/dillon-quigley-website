@@ -1,0 +1,6 @@
+export const CONFIG = {
+  GRID_SIZE: 6,
+  ANIMATION_DURATION: 500,
+  CELL_SCALE: 0.85,
+  LINE_WIDTH: 8,
+};
