@@ -2,6 +2,7 @@ import { CONFIG } from "./config.js";
 import { gameState, updateCounter } from "./gameState.js";
 import { elements } from "./domElements.js";
 import { createSideCard } from "./animations.js";
+import { createSvgLine } from "./utils.js";
 import {
   updateLines,
   checkAllWordsFound,
@@ -12,7 +13,6 @@ function getNeighbors(index) {
   const r = Math.floor(index / CONFIG.GRID_SIZE);
   const c = index % CONFIG.GRID_SIZE;
   const neighbors = [];
-  // Assuming gameState.board is a flat array and CONFIG.GRID_SIZE is columns
   const ROWS = Math.ceil(gameState.board.length / CONFIG.GRID_SIZE);
   for (let dr = -1; dr <= 1; dr++) {
     for (let dc = -1; dc <= 1; dc++) {
@@ -41,7 +41,7 @@ function findPathForWord(word) {
         path.push(neighborIndex);
         if (dfs(neighborIndex, pathIndex + 1)) return true;
         visited.delete(neighborIndex);
-        path.pop(); // Backtrack
+        path.pop();
       }
     }
     return false;
@@ -53,7 +53,7 @@ function findPathForWord(word) {
       visited.add(i);
       path.length = 0;
       path.push(i);
-      if (dfs(i, 1)) return [...path]; // Return a copy of the path
+      if (dfs(i, 1)) return [...path];
     }
   }
   return null;
@@ -89,7 +89,7 @@ export async function autoSolveReplay() {
           .join("");
       }
       await new Promise((res) => setTimeout(res, LETTER_DELAY));
-      cell.classList.remove("pick"); // Remove pick after delay, selected stays until word found
+      cell.classList.remove("pick");
     }
 
     await new Promise((res) => setTimeout(res, FOUND_DELAY));
@@ -105,7 +105,6 @@ export async function autoSolveReplay() {
       path.forEach((i) => gameState.gridCells[i].classList.remove("push"));
     }, 300);
 
-    // Manually call drawFoundLines for auto-solve, as submitWord is bypassed
     const isSpangram = word === gameState.spangram;
     const tempRects = gameState.gridCells.map((cell) =>
       cell.getBoundingClientRect()
@@ -114,24 +113,16 @@ export async function autoSolveReplay() {
     for (let i = 0; i < path.length - 1; i++) {
       const startRect = tempRects[path[i]];
       const endRect = tempRects[path[i + 1]];
-      const x1 = startRect.left + startRect.width / 2 - tempSvgRect.left;
-      const y1 = startRect.top + startRect.height / 2 - tempSvgRect.top;
-      const x2 = endRect.left + endRect.width / 2 - tempSvgRect.left;
-      const y2 = endRect.top + endRect.height / 2 - tempSvgRect.top;
-      const line = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "line"
+      const line = createSvgLine(
+        startRect,
+        endRect,
+        tempSvgRect,
+        isSpangram ? "#f5d547" : "#afdfee",
+        CONFIG.LINE_WIDTH
       );
-      line.setAttribute("x1", x1);
-      line.setAttribute("y1", y1);
-      line.setAttribute("x2", x2);
-      line.setAttribute("y2", y2);
-      line.setAttribute("stroke", isSpangram ? "#f5d547" : "#afdfee");
-      line.setAttribute("stroke-width", CONFIG.LINE_WIDTH);
-      line.setAttribute("stroke-linecap", "round");
       gameState.foundLines.push(line);
     }
-    updateLines(); // Update display with new found lines
+    updateLines();
 
     createSideCard(word);
     gameState.foundCount++;
@@ -141,6 +132,6 @@ export async function autoSolveReplay() {
     await new Promise((res) => setTimeout(res, FOUND_DELAY));
   }
 
-  checkAllWordsFound(); // Check for win at the end of auto-solve
+  checkAllWordsFound();
   gameState.isAutoSolving = false;
 }

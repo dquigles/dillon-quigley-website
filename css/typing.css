@@ -3,8 +3,8 @@
   font-weight: 500;
 
   text-align: center;
-  height: 1.5em; /* Adjust to prevent layout shift */
-  z-index: 10; /* Ensure it's above other elements if needed, but below critical UI like cards */
+  height: 1.5em;
+  z-index: 10;
 }
 
 .typing-text-caret::after {
@@ -19,8 +19,5 @@
   }
   50% {
     border-color: var(--text-color);
-  } /* Match text color */
+  }
 }
-
-/* No specific class needed for text appearing/disappearing via JS, 
-   but fade-out is already in animations.css and will be used. */

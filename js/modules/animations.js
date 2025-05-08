@@ -4,7 +4,7 @@ import { gameState } from "./gameState.js";
 export function createSideCard(word) {
   const baseCard = document.createElement("div");
   baseCard.className = "side-card";
-  baseCard.textContent = `${word} section content goes here...`; // Placeholder, original was similar
+  baseCard.textContent = `${word} section content goes here...`;
 
   const positionMap = {
     ABOUT: "left-middle",
@@ -29,13 +29,12 @@ export function createSideCard(word) {
       ? `card-${word}-${i}`
       : `card-${word}`;
 
-    const dir = zone.dataset.direction || "up";
-    card.classList.add(`slide-${dir}`);
+    card.classList.add("slide-right");
     zone.appendChild(card);
 
     card.addEventListener(
       "animationend",
-      () => card.classList.remove(`slide-${dir}`),
+      () => card.classList.remove("slide-right"),
       { once: true }
     );
   });
@@ -107,9 +106,8 @@ export function animateCascadePick() {
   }, 300);
 }
 
-// This function was present in the original main.js
 export function animateCards() {
-  const cards = document.querySelectorAll(".slide-target"); // Assuming .slide-target is the correct selector
+  const cards = document.querySelectorAll(".slide-target");
   cards.forEach((card, i) => {
     const dir = card.dataset.direction || "up";
     setTimeout(() => {

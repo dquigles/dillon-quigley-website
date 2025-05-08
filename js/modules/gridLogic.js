@@ -6,7 +6,7 @@ import {
   clearSelectionState,
 } from "./gameState.js";
 import { elements } from "./domElements.js";
-import { isAdjacent } from "./utils.js";
+import { isAdjacent, createSvgLine } from "./utils.js";
 import { createSideCard, animateCascadePick } from "./animations.js";
 import { typeText, deleteText } from "./typingText.js";
 
@@ -20,19 +20,13 @@ export function updateLines() {
     const startRect = rects[gameState.selectedCells[i]];
     const endRect = rects[gameState.selectedCells[i + 1]];
 
-    const x1 = startRect.left + startRect.width / 2 - svgRect.left;
-    const y1 = startRect.top + startRect.height / 2 - svgRect.top;
-    const x2 = endRect.left + endRect.width / 2 - svgRect.left;
-    const y2 = endRect.top + endRect.height / 2 - svgRect.top;
-
-    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line.setAttribute("x1", x1);
-    line.setAttribute("y1", y1);
-    line.setAttribute("x2", x2);
-    line.setAttribute("y2", y2);
-    line.setAttribute("stroke", "#e1dfd1");
-    line.setAttribute("stroke-width", CONFIG.LINE_WIDTH);
-    line.setAttribute("stroke-linecap", "round");
+    const line = createSvgLine(
+      startRect,
+      endRect,
+      svgRect,
+      "#e1dfd1", // strokeColor for selected lines
+      CONFIG.LINE_WIDTH
+    );
     elements.svg.appendChild(line);
   }
 }
@@ -45,22 +39,16 @@ function drawFoundLines(cells, isSpangram) {
     const startRect = rects[cells[i]];
     const endRect = rects[cells[i + 1]];
 
-    const x1 = startRect.left + startRect.width / 2 - svgRect.left;
-    const y1 = startRect.top + startRect.height / 2 - svgRect.top;
-    const x2 = endRect.left + endRect.width / 2 - svgRect.left;
-    const y2 = endRect.top + endRect.height / 2 - svgRect.top;
-
-    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line.setAttribute("x1", x1);
-    line.setAttribute("y1", y1);
-    line.setAttribute("x2", x2);
-    line.setAttribute("y2", y2);
-    line.setAttribute("stroke", isSpangram ? "#f5d547" : "#afdfee");
-    line.setAttribute("stroke-width", CONFIG.LINE_WIDTH);
-    line.setAttribute("stroke-linecap", "round");
+    const line = createSvgLine(
+      startRect,
+      endRect,
+      svgRect,
+      isSpangram ? "#f5d547" : "#afdfee", // strokeColor for found/spangram lines
+      CONFIG.LINE_WIDTH
+    );
     gameState.foundLines.push(line);
   }
-  updateLines(); // Redraw all lines including the new found one
+  updateLines();
 }
 
 function updateSelectedClass() {
@@ -84,9 +72,9 @@ function updateSelectedClass() {
 }
 
 export function clearSelectionDisplay() {
-  clearSelectionState(); // from gameState.js
+  clearSelectionState();
   updateSelectedClass();
-  if (elements.wordDisplay) elements.wordDisplay.textContent = "\u200b"; // Zero-width space
+  if (elements.wordDisplay) elements.wordDisplay.textContent = "\u200b";
   updateLines();
 }
 
@@ -100,10 +88,8 @@ export function checkAllWordsFound() {
           setTimeout(() => {
             if (elements.typingHintText) {
               elements.typingHintText.classList.add("fade-out");
-              // Optionally remove the element after animation or hide it
-              // elements.typingHintText.addEventListener('animationend', () => elements.typingHintText.style.display = 'none', { once: true });
             }
-          }, 5000); // 5 seconds delay
+          }, 3000);
         });
       });
     }
@@ -111,10 +97,9 @@ export function checkAllWordsFound() {
     if (elements.hint) {
       elements.hint.classList.add("fade-out");
     }
-    const autoSolveBtn = document.getElementById("autoSolveBtn");
-    if (autoSolveBtn) {
-      autoSolveBtn.classList.add("fade-out");
-      autoSolveBtn.disabled = true;
+    if (elements.autoSolveBtn) {
+      elements.autoSolveBtn.classList.add("fade-out");
+      elements.autoSolveBtn.disabled = true;
     }
     return true;
   }
@@ -146,10 +131,8 @@ export function submitWord() {
     updateCounter();
     createSideCard(word);
 
-    if (gameState.foundCount === gameState.words.size) {
-      const autoSolveBtn = document.getElementById("autoSolveBtn");
-      if (autoSolveBtn) autoSolveBtn.disabled = true; // Should be handled by checkAllWordsFound too
-    }
+    clearSelectionDisplay();
+    checkAllWordsFound();
   } else {
     if (elements.wordDisplay) {
       elements.wordDisplay.classList.add("shake");
@@ -159,8 +142,6 @@ export function submitWord() {
       );
     }
   }
-  clearSelectionDisplay();
-  checkAllWordsFound(); // Check for win condition after clearing selection
 }
 
 function selectCell(cellElement) {
@@ -168,7 +149,17 @@ function selectCell(cellElement) {
   const row = +cellElement.dataset.row;
   const col = +cellElement.dataset.col;
 
+  const currentLastSelected =
+    gameState.selectedCells.length > 0
+      ? gameState.selectedCells[gameState.selectedCells.length - 1]
+      : null;
+
   if (gameState.selectedSet.has(index)) {
+    if (index === currentLastSelected) {
+      gameState.tapCandidateForSubmit = index;
+    } else {
+      gameState.tapCandidateForSubmit = null;
+    }
     const idxInSelectedCells = gameState.selectedCells.indexOf(index);
     gameState.selectedCells = gameState.selectedCells.slice(
       0,
@@ -177,12 +168,14 @@ function selectCell(cellElement) {
     gameState.selectedSet = new Set(gameState.selectedCells);
   } else if (
     gameState.selectedCells.length === 0 ||
-    isAdjacent(row, col, gameState.selectedCells.slice(-1)[0])
+    isAdjacent(row, col, currentLastSelected)
   ) {
     gameState.selectedCells.push(index);
     gameState.selectedSet.add(index);
+    gameState.tapCandidateForSubmit = null;
   } else {
-    return; // Not adjacent or invalid selection
+    gameState.tapCandidateForSubmit = null;
+    return;
   }
 
   updateSelectedClass();
@@ -194,13 +187,37 @@ function selectCell(cellElement) {
 export function handleGridEvent(e) {
   if (gameState.isAutoSolving) return;
 
-  const cell = e.target.closest(".cell");
-  if (!cell || cell.classList.contains("found")) return;
+  let cell;
+  const eventType = e.type;
+
+  if (eventType === "touchstart" || eventType === "touchmove") {
+    if (e.touches && e.touches.length > 0) {
+      const targetElement = document.elementFromPoint(
+        e.touches[0].clientX,
+        e.touches[0].clientY
+      );
+      if (targetElement) {
+        cell = targetElement.closest(".cell");
+      }
+    }
+  } else {
+    cell = e.target.closest(".cell");
+  }
+
+  if (!cell || cell.classList.contains("found")) {
+    return;
+  }
+
+  if (eventType === "touchstart" || eventType === "touchmove") {
+    e.preventDefault();
+  }
 
   const index = +cell.dataset.index;
+
   try {
-    switch (e.type) {
+    switch (eventType) {
       case "mousedown":
+      case "touchstart":
         gameState.isMouseDown = true;
         gameState.dragged = false;
         selectCell(cell);
@@ -211,16 +228,23 @@ export function handleGridEvent(e) {
           selectCell(cell);
         }
         break;
+      case "touchmove":
+        if (gameState.isMouseDown) {
+          gameState.dragged = true;
+          selectCell(cell);
+        }
+        break;
       case "click":
         if (!gameState.dragged) {
-          // clearSelectionDisplay(); // Single click now deselects unless it's part of a drag
-          selectCell(cell); // Re-evaluate single click behavior if needed
+          selectCell(cell);
         }
         break;
       case "dblclick":
-        const lastSelected = gameState.selectedCells.slice(-1)[0];
-        if (index === lastSelected) {
-          submitWord();
+        const lastSelectedMouse = gameState.selectedCells.slice(-1)[0];
+        if (index === lastSelectedMouse && gameState.selectedCells.length > 0) {
+          if (getSelectedWord()) {
+            submitWord();
+          }
         }
         break;
     }
@@ -239,7 +263,7 @@ export function createBoard() {
     cell.dataset.row = Math.floor(i / CONFIG.GRID_SIZE);
     cell.dataset.col = i % CONFIG.GRID_SIZE;
     elements.grid.appendChild(cell);
-    gameState.gridCells.push(cell); // Populate gameState.gridCells
+    gameState.gridCells.push(cell);
   });
-  updateCounter(); // Initial counter update
+  updateCounter();
 }

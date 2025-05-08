@@ -1,15 +1,50 @@
+@media (max-width: 400px), (max-height: 600px) {
+  body {
+    overflow-y: auto;
+    position: static;
+    min-height: 100vh;
+    padding: 20px 0;
+  }
+}
+
 @media (max-width: 400px) {
   :root {
     --cell-size: 28px;
     --font-size-large: 28px;
     --font-size-medium: 20px;
     --font-size-small: 14px;
+    --grid-gap: 2px;
+  }
+
+  #autoSolveBtn {
+    font-size: 0.875rem;
+    padding: 0.4em 0.8em;
+  }
+
+  .card-zone.top-left,
+  .card-zone.left-middle,
+  .card-zone.bottom-left {
+    left: 10px;
+  }
+  .card-zone.top-right,
+  .card-zone.right-middle,
+  .card-zone.bottom-right {
+    right: 10px;
+  }
+  .card-zone.top-left,
+  .card-zone.top-right {
+    top: 10px;
+  }
+  .card-zone.bottom-left,
+  .card-zone.bottom-middle,
+  .card-zone.bottom-right {
+    bottom: 10px;
   }
 }
 
 @media (max-height: 600px) {
   body {
-    padding: 20px 0;
+    height: auto;
   }
 
   #grid-container {

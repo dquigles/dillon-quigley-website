@@ -1,4 +1,4 @@
-import { gameState } from "./modules/gameState.js";
+import { gameState, getSelectedWord } from "./modules/gameState.js";
 import { elements } from "./modules/domElements.js";
 import {
   createBoard,
@@ -20,29 +20,68 @@ if (elements.grid && elements.typingHintText) {
   elements.grid.addEventListener("mouseover", handleGridEvent);
   elements.grid.addEventListener("click", handleGridEvent);
   elements.grid.addEventListener("dblclick", handleGridEvent);
+
+  elements.grid.addEventListener("touchstart", handleGridEvent, {
+    passive: false,
+  });
+  elements.grid.addEventListener("touchmove", handleGridEvent, {
+    passive: false,
+  });
 } else {
   console.error("Grid element not found. Game cannot start.");
 }
 
-document.body.addEventListener("mouseup", () => {
+function handleInteractionEnd(e) {
   if (gameState.isAutoSolving) {
     gameState.isMouseDown = false;
     return;
   }
-  if (gameState.isMouseDown && gameState.dragged) {
-    gridSubmitWord(); // This will internally call checkAllWordsFound in gridLogic.js
-  }
-  gameState.isMouseDown = false;
-});
 
-const autoSolveBtn = document.getElementById("autoSolveBtn");
-if (autoSolveBtn) {
-  autoSolveBtn.addEventListener(
+  let interactionEndedOnCell = null;
+  if (e.type === "touchend") {
+    if (e.changedTouches && e.changedTouches.length > 0) {
+      const targetElement = document.elementFromPoint(
+        e.changedTouches[0].clientX,
+        e.changedTouches[0].clientY
+      );
+      if (targetElement) {
+        interactionEndedOnCell = targetElement.closest(".cell");
+      }
+    }
+  }
+
+  if (gameState.isMouseDown && gameState.dragged) {
+    if (getSelectedWord()) {
+      gridSubmitWord();
+    }
+  } else if (
+    gameState.isMouseDown &&
+    !gameState.dragged &&
+    e.type === "touchend" &&
+    interactionEndedOnCell
+  ) {
+    const tappedCellIndex = +interactionEndedOnCell.dataset.index;
+    if (
+      gameState.tapCandidateForSubmit === tappedCellIndex &&
+      getSelectedWord()
+    ) {
+      gridSubmitWord();
+    }
+  }
+
+  gameState.isMouseDown = false;
+  gameState.dragged = false;
+  gameState.tapCandidateForSubmit = null;
+}
+
+document.body.addEventListener("mouseup", handleInteractionEnd);
+document.body.addEventListener("touchend", handleInteractionEnd);
+
+if (elements.autoSolveBtn) {
+  elements.autoSolveBtn.addEventListener(
     "click",
     async () => {
-      // gameState.isAutoSolving is set within autoSolveReplay
       await autoSolveReplay();
-      // autoSolveReplay will call checkAllWordsFound (via gridLogic module), which handles button state on win.
     },
     { once: true }
   );

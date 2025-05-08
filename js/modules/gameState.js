@@ -65,12 +65,13 @@ export const gameState = {
   selectedSet: new Set(),
   isMouseDown: false,
   dragged: false,
-  gridCells: [], // This will be populated by createBoard in gridLogic.js
+  gridCells: [],
   usedIndices: new Set(),
   foundLines: [],
   foundCount: 0,
   foundWords: new Set(),
   isAutoSolving: false,
+  tapCandidateForSubmit: null,
 };
 
 export function updateCounter() {
@@ -83,8 +84,8 @@ export function getSelectedWord() {
   return gameState.selectedCells.map((i) => gameState.board[i]).join("");
 }
 
-// Clears only the selection state. UI updates are handled by gridLogic.
 export function clearSelectionState() {
   gameState.selectedCells = [];
   gameState.selectedSet.clear();
+  gameState.tapCandidateForSubmit = null;
 }

@@ -2,10 +2,10 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
-  z-index: 100;
+  z-index: 10;
 }
 
 .card-zone {
@@ -13,58 +13,80 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
   pointer-events: auto;
+  padding: 5px;
 }
 
 .card-zone.top-left {
   top: 20px;
   left: 20px;
-  align-items: flex-start;
 }
 .card-zone.top-right {
   top: 20px;
   right: 20px;
-  align-items: flex-end;
 }
 .card-zone.left-middle {
   top: 50%;
   left: 20px;
   transform: translateY(-50%);
-  align-items: flex-start;
 }
 .card-zone.right-middle {
   top: 50%;
   right: 20px;
   transform: translateY(-50%);
-  align-items: flex-end;
 }
-.card-zone.bottom-left {
-  bottom: 20px;
-  left: 20px;
-  align-items: flex-start;
-}
-.card-zone.bottom-middle {
+
+#bottom-card-row {
+  position: absolute;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
+  width: 90%;
+  max-width: 1000px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  pointer-events: auto;
 }
-.card-zone.bottom-right {
-  bottom: 20px;
-  right: 20px;
-  align-items: flex-end;
+
+#bottom-card-row .card-zone {
+  position: static;
+  transform: none;
+  flex: 1;
+  max-width: 28%;
 }
 
 .side-card {
-  background-color: var(--found-color);
-  padding: 12px;
-  border-radius: 8px;
-  font-size: var(--font-size-small);
-  max-width: 200px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border: 2px solid var(--found-color);
+  color: var(--primary-color);
+  width: 100%;
+  max-width: 22vw;
+  min-height: 12vh;
+  padding: 2vmin;
+  border-radius: 1vmin;
+  font-size: 2.8vmin;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Auto-solve button styling */
+#cardContainer > .card-zone .side-card {
+  width: 20vw;
+  max-width: 250px;
+}
+
+#bottom-card-row .side-card {
+  font-size: 2.2vmin;
+  min-height: 10vh;
+  max-width: 100%;
+}
+
 #autoSolveBtn {
   background-color: #28a745;
   color: #ffffff;

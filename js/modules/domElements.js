@@ -3,6 +3,7 @@ export const elements = {
   wordDisplay: document.getElementById("wordDisplay"),
   wordCounter: document.getElementById("wordCounter"),
   svg: document.getElementById("lines"),
-  hint: document.getElementById("game-hint"), // Will be null if hint was removed from HTML
+  hint: document.getElementById("game-hint"),
   typingHintText: document.getElementById("typingHintText"),
+  autoSolveBtn: document.getElementById("autoSolveBtn"),
 };

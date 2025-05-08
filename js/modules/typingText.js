@@ -15,12 +15,10 @@ export function typeText(textToType, speed = DEFAULT_TYPE_SPEED, callback) {
     return;
   }
 
-  // Ensure the element is cleared to ZWS before starting to type
   elements.typingHintText.textContent = "\u200b";
   setCaret(true);
 
   if (textToType.length === 0) {
-    // If there's nothing to type
     setCaret(false);
     if (callback) callback();
     return;
@@ -30,7 +28,6 @@ export function typeText(textToType, speed = DEFAULT_TYPE_SPEED, callback) {
   function typeChar() {
     if (i < textToType.length) {
       if (i === 0) {
-        // Replace ZWS with the first character
         elements.typingHintText.textContent = textToType.charAt(i);
       } else {
         elements.typingHintText.textContent += textToType.charAt(i);
@@ -51,7 +48,6 @@ export function deleteText(speed = DEFAULT_DELETE_SPEED, callback) {
     return;
   }
   let currentText = elements.typingHintText.textContent;
-  // If current text is already just a ZWS, consider it empty for deletion purposes.
   if (currentText === "\u200b") currentText = "";
 
   let i = currentText.length;
@@ -59,12 +55,11 @@ export function deleteText(speed = DEFAULT_DELETE_SPEED, callback) {
 
   function deleteChar() {
     if (i > 0) {
-      i--; // Decrement first to get the new length/index for substring
+      i--;
       const newText = currentText.substring(0, i);
       elements.typingHintText.textContent = newText === "" ? "\u200b" : newText;
       setTimeout(deleteChar, speed);
     } else {
-      // All characters are deleted. Ensure it's a zero-width space.
       elements.typingHintText.textContent = "\u200b";
       setCaret(false);
       if (callback) callback();
@@ -72,7 +67,6 @@ export function deleteText(speed = DEFAULT_DELETE_SPEED, callback) {
   }
 
   if (i === 0) {
-    // Already effectively empty (was ZWS or actually empty)
     elements.typingHintText.textContent = "\u200b";
     setCaret(false);
     if (callback) callback();
