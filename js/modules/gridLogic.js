@@ -8,6 +8,7 @@ import {
 import { elements } from "./domElements.js";
 import { isAdjacent } from "./utils.js";
 import { createSideCard, animateCascadePick } from "./animations.js";
+import { typeText, deleteText } from "./typingText.js";
 
 export function updateLines() {
   const rects = gameState.gridCells.map((cell) => cell.getBoundingClientRect());
@@ -92,6 +93,20 @@ export function clearSelectionDisplay() {
 export function checkAllWordsFound() {
   if (gameState.foundWords.size === gameState.words.size) {
     animateCascadePick();
+
+    if (elements.typingHintText) {
+      deleteText(undefined, () => {
+        typeText("congrats!", undefined, () => {
+          setTimeout(() => {
+            if (elements.typingHintText) {
+              elements.typingHintText.classList.add("fade-out");
+              // Optionally remove the element after animation or hide it
+              // elements.typingHintText.addEventListener('animationend', () => elements.typingHintText.style.display = 'none', { once: true });
+            }
+          }, 5000); // 5 seconds delay
+        });
+      });
+    }
 
     if (elements.hint) {
       elements.hint.classList.add("fade-out");

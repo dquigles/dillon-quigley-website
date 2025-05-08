@@ -7,11 +7,13 @@ import {
 } from "./modules/gridLogic.js";
 import { animateSnakeDrop } from "./modules/animations.js";
 import { autoSolveReplay } from "./modules/autoSolve.js";
+import { typeText } from "./modules/typingText.js";
 
 // --- Initialize Game ---
-if (elements.grid) {
+if (elements.grid && elements.typingHintText) {
   createBoard();
   animateSnakeDrop();
+  typeText("hint: personal website");
 
   // --- Event Listeners ---
   elements.grid.addEventListener("mousedown", handleGridEvent);

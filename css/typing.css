@@ -1,0 +1,26 @@
+#typingHintText {
+  font-size: var(--font-size-medium);
+  font-weight: 500;
+
+  text-align: center;
+  height: 1.5em; /* Adjust to prevent layout shift */
+  z-index: 10; /* Ensure it's above other elements if needed, but below critical UI like cards */
+}
+
+.typing-text-caret::after {
+  content: "|";
+  animation: blink-caret 1s step-end infinite;
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--text-color);
+  } /* Match text color */
+}
+
+/* No specific class needed for text appearing/disappearing via JS, 
+   but fade-out is already in animations.css and will be used. */

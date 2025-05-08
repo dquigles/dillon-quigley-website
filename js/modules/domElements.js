@@ -4,4 +4,5 @@ export const elements = {
   wordCounter: document.getElementById("wordCounter"),
   svg: document.getElementById("lines"),
   hint: document.getElementById("game-hint"), // Will be null if hint was removed from HTML
+  typingHintText: document.getElementById("typingHintText"),
 };

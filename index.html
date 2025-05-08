@@ -9,13 +9,26 @@
   <link rel="stylesheet" href="css/grid.css" />
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/typing.css" />
   <link rel="stylesheet" href="css/responsive.css" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>Q</text></svg>" />
+  <style>
+    main {
+      position: relative; /* Crucial for #typingHintText to be absolute relative to main */
+      /* Optional: common styling for main to be a centered block, adjust as needed */
+      display: block;
+      width: 90%; /* Or your preferred width */
+      max-width: 800px; /* Example max-width */
+      margin: 0 auto; /* Centers the block */
+      padding-top: 50px; /* Example padding to make space for absolute hint if needed */
+    }
+  </style>
 </head>
 <body>
 
 
   <main>
+    <div id="typingHintText" aria-live="polite"></div>
     <h1 id="wordDisplay" aria-live="polite">​</h1>
     <div id="grid-container" role="application" aria-label="Word puzzle grid">
       <svg id="lines" width="100%" height="100%" aria-hidden="true"></svg>
