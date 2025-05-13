@@ -6,7 +6,11 @@
   height: 100%;
   padding: clamp(8px, 5.091px + 0.909vw, 16px);
   border-radius: clamp(4px, 2.545px + 0.4545vw, 8px);
-  font-size: clamp(14px, 11.818px + 0.6818vw, 20px);
+  font-size: clamp(
+    14px,
+    11.818px + 0.6818vw,
+    20px
+  ); /* Base font size for card, content can override */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,6 +20,38 @@
   word-break: break-word;
   box-shadow: 0 0.2vmin 0.5vmin rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Basic styles for the direct content wrapper within .side-card */
+.side-card .card-content-inner {
+  width: 100%;
+  height: 100%;
+  display: flex; /* This allows content to be flex-formatted */
+  flex-direction: column;
+  justify-content: center; /* Default, card styles can override */
+  align-items: center; /* Default, card styles can override */
+  padding: 10px; /* Default inner padding, card styles can override */
+  box-sizing: border-box;
+  text-align: center; /* Default text-align, card styles can override */
+}
+
+/* General default for paragraphs inside cards, can be overridden by card-specific styles */
+.side-card .card-content-inner p {
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  line-height: 1.4;
+  margin: 5px 0;
+}
+
+/* General default for links inside cards, can be overridden by card-specific styles */
+.side-card .card-content-inner a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.side-card .card-content-inner a:hover {
+  text-decoration: underline;
 }
 
 #autoSolveBtn {

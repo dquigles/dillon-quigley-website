@@ -1,0 +1,38 @@
+<style>
+  .card-content-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* Remove padding if the link takes the whole space */
+    width: 100%;
+    height: 100%;
+  }
+  .resume-button-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--found-color);
+    color: var(--primary-color); /* Changed from background for better contrast on found-color */
+    text-decoration: none;
+    font-size: clamp(1.3rem, 3.5vw, 2rem); /* Slightly larger font */
+    font-weight: 600; /* Slightly less than bold for a cleaner look */
+    border-radius: inherit; /* Inherit from .side-card */
+    transition: background-color 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
+    text-align: center; /* Ensure text centers if it wraps */
+    padding: 10px; /* Add some padding for text */
+    box-sizing: border-box;
+  }
+  .resume-button-link:hover,
+  .resume-button-link:focus {
+    background-color: var(--spangram-color);
+    color: var(--primary-color);
+    transform: scale(1.03);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Softer, larger shadow on hover */
+    outline: none;
+  }
+</style>
+<div class="card-content-inner">
+  <a href="#" class="resume-button-link" target="_blank">View My Resume</a>
+</div> 

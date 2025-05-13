@@ -1,0 +1,59 @@
+<style>
+  .card-content-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: clamp(15px, 3vw, 20px);
+    height: 100%;
+  }
+  .card-subtitle {
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    color: var(--primary-color);
+    margin: 0 0 15px 0;
+    font-weight: 600;
+  }
+  .about-summary-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    text-align: center;
+    max-width: 90%; /* Allow it to use more width if needed */
+  }
+  .about-summary-list li {
+    font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+    line-height: 1.6;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  .learn-more-btn {
+    display: inline-block;
+    background-color: var(--background-color);
+    color: var(--background-color);
+    padding: clamp(10px, 2vw, 12px) clamp(20px, 4vw, 25px); /* Responsive padding */
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .learn-more-btn:hover,
+  .learn-more-btn:focus {
+    background-color: var(--spangram-color);
+    color: var(--primary-color);
+    transform: scale(1.03) translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    outline: none;
+  }
+</style>
+<div class="card-content-inner">
+  <h2 class="card-subtitle">About Me</h2>
+  <ul class="about-summary-list">
+    <li>Creative Full-Stack Developer</li>
+    <li>Passion for Interactive Design & UX</li>
+    <li>Lifelong Learner & Tech Enthusiast</li>
+  </ul>
+  <a href="#" class="learn-more-btn" target="_blank">Learn More</a>
+</div> 

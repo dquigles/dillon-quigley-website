@@ -1,10 +1,9 @@
 import { CONFIG } from "./config.js";
 import { gameState } from "./gameState.js";
 
-export function createSideCard(word) {
+export async function createSideCard(word) {
   const baseCard = document.createElement("div");
   baseCard.className = "side-card";
-  baseCard.textContent = `${word} section content goes here...`;
 
   const positionMap = {
     ABOUT: "aboutZone",
@@ -28,8 +27,25 @@ export function createSideCard(word) {
     return;
   }
 
+  const existingCard = zone.querySelector(".side-card");
+  if (existingCard) {
+    existingCard.remove();
+  }
+
   const card = baseCard.cloneNode(true);
   card.id = `card-${word}`;
+
+  try {
+    const response = await fetch(`cards/${word.toLowerCase()}.html`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const htmlContent = await response.text();
+    card.innerHTML = htmlContent;
+  } catch (error) {
+    console.error(`Failed to load content for ${word}:`, error);
+    card.innerHTML = `<p>Error loading content for ${word}.</p>`;
+  }
 
   let animationClass;
   const isMobileView = window.matchMedia("(max-width: 768px)").matches;
