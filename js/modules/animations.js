@@ -7,37 +7,52 @@ export function createSideCard(word) {
   baseCard.textContent = `${word} section content goes here...`;
 
   const positionMap = {
-    ABOUT: "left-middle",
-    CONTACT: "bottom-right",
-    MUSIC: "right-middle",
-    BLOG: "bottom-left",
-    PROJECTS: "bottom-middle",
-    RESUME: "top-right",
-    DILLONQUIGLEY: "top-left",
+    ABOUT: "aboutZone",
+    CONTACT: "contactZone",
+    MUSIC: "musicZone",
+    BLOG: "blogZone",
+    PROJECTS: "projectsZone",
+    RESUME: "resumeZone",
+    DILLONQUIGLEY: "dillonQuigleyZone",
   };
 
-  const zones = Array.isArray(positionMap[word])
-    ? positionMap[word]
-    : [positionMap[word]];
+  const zoneName = positionMap[word];
+  if (!zoneName) {
+    console.warn(`No zone defined for word: ${word}`);
+    return;
+  }
 
-  zones.forEach((zoneName, i) => {
-    const zone = document.querySelector(`.card-zone.${zoneName}`);
-    if (!zone) return;
+  const zone = document.getElementById(zoneName);
+  if (!zone) {
+    console.warn(`Zone element not found for ID: ${zoneName}`);
+    return;
+  }
 
-    const card = baseCard.cloneNode(true);
-    card.id = Array.isArray(positionMap[word])
-      ? `card-${word}-${i}`
-      : `card-${word}`;
+  const card = baseCard.cloneNode(true);
+  card.id = `card-${word}`;
 
-    card.classList.add("slide-right");
-    zone.appendChild(card);
+  let animationClass;
+  const isMobileView = window.matchMedia("(max-width: 768px)").matches;
 
-    card.addEventListener(
-      "animationend",
-      () => card.classList.remove("slide-right"),
-      { once: true }
-    );
-  });
+  if (isMobileView) {
+    animationClass = "slide-right";
+  } else {
+    animationClass = "slide-right";
+    if (word === "DILLONQUIGLEY" || word === "ABOUT" || word === "BLOG") {
+      animationClass = "slide-left";
+    } else if (word === "PROJECTS") {
+      animationClass = "slide-bottom";
+    }
+  }
+
+  card.classList.add(animationClass);
+  zone.appendChild(card);
+
+  card.addEventListener(
+    "animationend",
+    () => card.classList.remove(animationClass),
+    { once: true }
+  );
 }
 
 export function animateSnakeDrop() {

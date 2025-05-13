@@ -1,7 +1,7 @@
 #typingHintText {
   font-size: var(--font-size-medium);
   font-weight: 500;
-
+  white-space: nowrap;
   text-align: center;
   height: 1.5em;
   z-index: 10;

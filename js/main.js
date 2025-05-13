@@ -9,13 +9,11 @@ import { animateSnakeDrop } from "./modules/animations.js";
 import { autoSolveReplay } from "./modules/autoSolve.js";
 import { typeText } from "./modules/typingText.js";
 
-// --- Initialize Game ---
 if (elements.grid && elements.typingHintText) {
   createBoard();
   animateSnakeDrop();
   typeText("hint: personal website");
 
-  // --- Event Listeners ---
   elements.grid.addEventListener("mousedown", handleGridEvent);
   elements.grid.addEventListener("mouseover", handleGridEvent);
   elements.grid.addEventListener("click", handleGridEvent);

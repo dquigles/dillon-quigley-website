@@ -92,6 +92,38 @@
   animation: slideInRight 0.6s ease-out forwards;
 }
 
+/* New Slide In Left Animation */
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-left {
+  animation: slideInLeft 0.6s ease-out forwards;
+}
+
+/* New Slide In Bottom Animation */
+@keyframes slideInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-bottom {
+  animation: slideInBottom 0.6s ease-out forwards;
+}
+
 @keyframes fadeOut {
   from {
     opacity: 1;

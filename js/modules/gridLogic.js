@@ -11,20 +11,19 @@ import { createSideCard, animateCascadePick } from "./animations.js";
 import { typeText, deleteText } from "./typingText.js";
 
 export function updateLines() {
-  const rects = gameState.gridCells.map((cell) => cell.getBoundingClientRect());
-  const svgRect = elements.svg.getBoundingClientRect();
-  elements.svg.innerHTML = ""; // Clear previous lines
+  elements.svg.innerHTML = "";
   gameState.foundLines.forEach((line) => elements.svg.appendChild(line));
 
   for (let i = 0; i < gameState.selectedCells.length - 1; i++) {
-    const startRect = rects[gameState.selectedCells[i]];
-    const endRect = rects[gameState.selectedCells[i + 1]];
+    const startIndex = gameState.selectedCells[i];
+    const endIndex = gameState.selectedCells[i + 1];
 
     const line = createSvgLine(
-      startRect,
-      endRect,
-      svgRect,
-      "#e1dfd1", // strokeColor for selected lines
+      startIndex,
+      endIndex,
+      elements.grid,
+      elements.svg,
+      "#e1dfd1",
       CONFIG.LINE_WIDTH
     );
     elements.svg.appendChild(line);
@@ -32,18 +31,17 @@ export function updateLines() {
 }
 
 function drawFoundLines(cells, isSpangram) {
-  const rects = gameState.gridCells.map((cell) => cell.getBoundingClientRect());
-  const svgRect = elements.svg.getBoundingClientRect();
-
   for (let i = 0; i < cells.length - 1; i++) {
-    const startRect = rects[cells[i]];
-    const endRect = rects[cells[i + 1]];
+    const startIndex = cells[i];
+    const endIndex = cells[i + 1];
+    const color = isSpangram ? "#f5d547" : "#afdfee";
 
     const line = createSvgLine(
-      startRect,
-      endRect,
-      svgRect,
-      isSpangram ? "#f5d547" : "#afdfee", // strokeColor for found/spangram lines
+      startIndex,
+      endIndex,
+      elements.grid,
+      elements.svg,
+      color,
       CONFIG.LINE_WIDTH
     );
     gameState.foundLines.push(line);

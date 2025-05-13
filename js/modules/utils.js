@@ -1,4 +1,5 @@
 import { gameState } from "./gameState.js";
+import { CONFIG } from "./config.js";
 
 export function isAdjacent(row, col, lastIndex) {
   const cell = gameState.gridCells[lastIndex];
@@ -11,17 +12,50 @@ export function isAdjacent(row, col, lastIndex) {
 }
 
 export function createSvgLine(
-  startCellRect,
-  endCellRect,
-  svgParentRect,
+  startIndex,
+  endIndex,
+  gridElement,
+  svgElement,
   strokeColor,
   strokeWidth,
   strokeLinecap = "round"
 ) {
-  const x1 = startCellRect.left + startCellRect.width / 2 - svgParentRect.left;
-  const y1 = startCellRect.top + startCellRect.height / 2 - svgParentRect.top;
-  const x2 = endCellRect.left + endCellRect.width / 2 - svgParentRect.left;
-  const y2 = endCellRect.top + endCellRect.height / 2 - svgParentRect.top;
+  const computedStyle = getComputedStyle(gridElement);
+  const cellSizeStr = computedStyle.getPropertyValue("--cell-size").trim();
+  const gridGapStr = computedStyle.getPropertyValue("--grid-gap").trim();
+
+  const cellSizePx = parseFloat(cellSizeStr);
+  const gridGapPx = parseFloat(gridGapStr);
+
+  if (isNaN(cellSizePx) || isNaN(gridGapPx)) {
+    console.error(
+      "Failed to parse cell size or grid gap from CSS variables. Lines may not draw correctly.",
+      { cellSizeStr, gridGapStr }
+    );
+  }
+
+  const gridContainerRect = gridElement.getBoundingClientRect();
+  const svgParentRect = svgElement.getBoundingClientRect();
+  const gridSize = CONFIG.GRID_SIZE;
+
+  const startRow = Math.floor(startIndex / gridSize);
+  const startCol = startIndex % gridSize;
+  const endRow = Math.floor(endIndex / gridSize);
+  const endCol = endIndex % gridSize;
+
+  const x1_relative_to_grid =
+    startCol * (cellSizePx + gridGapPx) + cellSizePx / 2;
+  const y1_relative_to_grid =
+    startRow * (cellSizePx + gridGapPx) + cellSizePx / 2;
+  const x2_relative_to_grid =
+    endCol * (cellSizePx + gridGapPx) + cellSizePx / 2;
+  const y2_relative_to_grid =
+    endRow * (cellSizePx + gridGapPx) + cellSizePx / 2;
+
+  const x1 = gridContainerRect.left + x1_relative_to_grid - svgParentRect.left;
+  const y1 = gridContainerRect.top + y1_relative_to_grid - svgParentRect.top;
+  const x2 = gridContainerRect.left + x2_relative_to_grid - svgParentRect.left;
+  const y2 = gridContainerRect.top + y2_relative_to_grid - svgParentRect.top;
 
   const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
   line.setAttribute("x1", x1);

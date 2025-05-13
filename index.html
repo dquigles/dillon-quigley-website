@@ -14,33 +14,47 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>Q</text></svg>" />
 </head>
 <body>
-
-
-  <main>
-    <div id="typingHintText" aria-live="polite"></div>
-    <h1 id="wordDisplay" aria-live="polite">​</h1>
-    <div id="grid-container" role="application" aria-label="Word puzzle grid">
-      <svg id="lines" width="100%" height="100%" aria-hidden="true"></svg>
-      <div id="grid"></div>
+  <div class="main-grid-container">
+    <!-- Row 1 -->
+    <div class="grid-cell dillon-quigley-cell" id="dillonQuigleyZone">
+      <!-- DILLONQUIGLEY card will be placed here by JS -->
     </div>
-    <div id="wordCounter" aria-live="polite"></div>
-    
-    <button id="autoSolveBtn">auto solve</button>
-  </main>
+    <div class="grid-cell" id="resumeZone">
+      <!-- RESUME card will be placed here by JS -->
+    </div>
 
-  <div id="cardContainer">
-    <div class="card-zone top-left" data-direction="left"></div>
-    <div class="card-zone top-right" data-direction="right"></div>
-    <div class="card-zone left-middle" data-direction="left"></div>
-    <div class="card-zone right-middle" data-direction="right"></div>
-    <div id="bottom-card-row">
-      <div class="card-zone bottom-left" data-direction="left"></div>
-      <div class="card-zone bottom-middle" data-direction="up"></div>
-      <div class="card-zone bottom-right" data-direction="right"></div>
+    <!-- Row 2 -->
+    <div class="grid-cell" id="aboutZone">
+      <!-- ABOUT card will be placed here by JS -->
+    </div>
+    <div class="grid-cell game-cell">
+      <main>
+        <div id="typingHintText" aria-live="polite"></div>
+        <h1 id="wordDisplay" aria-live="polite">​</h1>
+        <div id="grid-container" role="application" aria-label="Word puzzle grid">
+          <svg id="lines" width="100%" height="100%" aria-hidden="true"></svg>
+          <div id="grid"></div>
+        </div>
+        <div id="wordCounter" aria-live="polite"></div>
+        <button id="autoSolveBtn">auto solve</button>
+      </main>
+    </div>
+    <div class="grid-cell" id="musicZone">
+      <!-- MUSIC card will be placed here by JS -->
+    </div>
+
+    <!-- Row 3 -->
+    <div class="grid-cell" id="blogZone">
+      <!-- BLOG card will be placed here by JS -->
+    </div>
+    <div class="grid-cell" id="projectsZone">
+      <!-- PROJECTS card will be placed here by JS -->
+    </div>
+    <div class="grid-cell" id="contactZone">
+      <!-- CONTACT card will be placed here by JS -->
     </div>
   </div>
 
   <script type="module" src="js/main.js"></script>
-  
 </body>
 </html>

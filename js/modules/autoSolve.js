@@ -106,18 +106,17 @@ export async function autoSolveReplay() {
     }, 300);
 
     const isSpangram = word === gameState.spangram;
-    const tempRects = gameState.gridCells.map((cell) =>
-      cell.getBoundingClientRect()
-    );
-    const tempSvgRect = elements.svg.getBoundingClientRect();
     for (let i = 0; i < path.length - 1; i++) {
-      const startRect = tempRects[path[i]];
-      const endRect = tempRects[path[i + 1]];
+      const startIndex = path[i];
+      const endIndex = path[i + 1];
+      const color = isSpangram ? "#f5d547" : "#afdfee";
+
       const line = createSvgLine(
-        startRect,
-        endRect,
-        tempSvgRect,
-        isSpangram ? "#f5d547" : "#afdfee",
+        startIndex,
+        endIndex,
+        elements.grid,
+        elements.svg,
+        color,
         CONFIG.LINE_WIDTH
       );
       gameState.foundLines.push(line);

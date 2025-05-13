@@ -1,7 +1,7 @@
 import { elements } from "./domElements.js";
 
-const DEFAULT_TYPE_SPEED = 100; // ms per character
-const DEFAULT_DELETE_SPEED = 70; // ms per character
+const DEFAULT_TYPE_SPEED = 100;
+const DEFAULT_DELETE_SPEED = 70;
 
 function setCaret(show) {
   if (elements.typingHintText) {

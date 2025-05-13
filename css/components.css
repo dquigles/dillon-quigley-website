@@ -1,71 +1,12 @@
-#cardContainer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 10;
-}
-
-.card-zone {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  pointer-events: auto;
-  padding: 5px;
-}
-
-.card-zone.top-left {
-  top: 20px;
-  left: 20px;
-}
-.card-zone.top-right {
-  top: 20px;
-  right: 20px;
-}
-.card-zone.left-middle {
-  top: 50%;
-  left: 20px;
-  transform: translateY(-50%);
-}
-.card-zone.right-middle {
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-}
-
-#bottom-card-row {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 1000px;
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  pointer-events: auto;
-}
-
-#bottom-card-row .card-zone {
-  position: static;
-  transform: none;
-  flex: 1;
-  max-width: 28%;
-}
-
 .side-card {
   background-color: white;
   border: 2px solid var(--found-color);
   color: var(--primary-color);
   width: 100%;
-  max-width: 22vw;
-  min-height: 12vh;
-  padding: 2vmin;
-  border-radius: 1vmin;
-  font-size: 2.8vmin;
+  height: 100%;
+  padding: clamp(8px, 5.091px + 0.909vw, 16px);
+  border-radius: clamp(4px, 2.545px + 0.4545vw, 8px);
+  font-size: clamp(14px, 11.818px + 0.6818vw, 20px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -73,18 +14,8 @@
   text-align: center;
   overflow-wrap: break-word;
   word-break: break-word;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-#cardContainer > .card-zone .side-card {
-  width: 20vw;
-  max-width: 250px;
-}
-
-#bottom-card-row .side-card {
-  font-size: 2.2vmin;
-  min-height: 10vh;
-  max-width: 100%;
+  box-shadow: 0 0.2vmin 0.5vmin rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
 
 #autoSolveBtn {
