@@ -137,3 +137,39 @@
   animation: fadeOut 0.5s ease-out forwards;
   pointer-events: none;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Globally disable or minimize animations and transitions */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* For specific animated elements, ensure they are visible without complex movement */
+  /* Replace slide/drop/cascade animations with a simple fade-in */
+  .slide-right,
+  .slide-left,
+  .slide-bottom,
+  .drop,
+  .cascade-pick {
+    animation-name: fadeInReducedMotion !important;
+    animation-duration: 0.1s !important; /* Keep it very short */
+    /* transform: none !important; -- this might be handled by the keyframes or be too aggressive */
+  }
+
+  /* Keyframe for a simple fade-in, used for reduced motion */
+  @keyframes fadeInReducedMotion {
+    from {
+      opacity: 0;
+      transform: none;
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}

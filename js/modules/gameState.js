@@ -1,3 +1,8 @@
+/**
+ * Manages the state of the Strands game, including the game board,
+ * selected cells, found words, and various game flags.
+ * Also provides utility functions to interact with the game state.
+ */
 import { elements } from "./domElements.js";
 
 export const gameState = {

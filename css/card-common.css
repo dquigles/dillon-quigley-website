@@ -1,0 +1,54 @@
+/* Common styles for cards */
+
+/* Base style for the inner content wrapper of cards */
+/* This can be further specialized by individual card styles */
+.card-content-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%; /* Often used */
+  box-sizing: border-box; /* Good default */
+  padding: clamp(15px, 3vw, 20px); /* A common default padding */
+}
+
+/* Style for cards where the content is primarily column-oriented */
+.card-content-inner.column-layout {
+  flex-direction: column;
+  text-align: center; /* Often accompanies column layout */
+}
+
+/* Style for cards that are essentially a single large button/link */
+.card-content-inner.full-link-container {
+  padding: 0; /* These typically have no padding on the container itself */
+  /* flex-direction defaults to row, which is fine here */
+}
+
+/* Common button style for project, blog, resume cards */
+.card-button-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: var(--found-color);
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: clamp(1.3rem, 3.5vw, 2rem);
+  font-weight: 600;
+  border-radius: inherit; /* Inherits from .side-card typically */
+  transition: background-color 0.25s ease, transform 0.15s ease,
+    box-shadow 0.25s ease;
+  text-align: center;
+  padding: 10px; /* Padding within the button itself */
+  box-sizing: border-box;
+}
+
+.card-button-link:hover,
+.card-button-link:focus {
+  background-color: var(--spangram-color);
+  color: var(--primary-color);
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  outline: none;
+}

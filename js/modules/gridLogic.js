@@ -139,6 +139,7 @@ export function submitWord() {
         CONFIG.ANIMATION_DURATION
       );
     }
+    clearSelectionDisplay();
   }
 }
 
@@ -180,6 +181,16 @@ function selectCell(cellElement) {
   updateLines();
   if (elements.wordDisplay)
     elements.wordDisplay.textContent = getSelectedWord() || "Strands";
+
+  // Auto-submit if word is 14 letters or longer
+  const currentWord = getSelectedWord();
+  if (currentWord.length >= 14) {
+    // Check if the word is known before attempting to submit,
+    // to avoid submitting partial non-words if a known 14+ letter word is a prefix of an even longer unknown sequence.
+    // However, the original submitWord() already handles unknown words by shaking.
+    // So, direct submission is fine.
+    submitWord();
+  }
 }
 
 export function handleGridEvent(e) {

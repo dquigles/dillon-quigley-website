@@ -1,13 +1,5 @@
 <style>
-  .card-content-inner {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: clamp(15px, 3vw, 20px);
-    height: 100%;
-  }
+  /* .card-content-inner is now styled by css/card-common.css with .column-layout */
   .card-subtitle {
     font-size: clamp(1.3rem, 4vw, 1.8rem);
     color: var(--primary-color);
@@ -48,12 +40,12 @@
     outline: none;
   }
 </style>
-<div class="card-content-inner">
+<div class="card-content-inner column-layout">
   <h2 class="card-subtitle">About Me</h2>
   <ul class="about-summary-list">
     <li>Creative Full-Stack Developer</li>
     <li>Passion for Interactive Design & UX</li>
     <li>Lifelong Learner & Tech Enthusiast</li>
   </ul>
-  <a href="#" class="learn-more-btn" target="_blank">Learn More</a>
+  <a href="about.html" class="learn-more-btn" target="_blank">Learn More</a>
 </div> 

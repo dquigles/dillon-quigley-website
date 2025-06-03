@@ -1,3 +1,47 @@
-<div>
-    <h2>Contact</h2>
+<style>
+  .card-content-inner {
+    /* Using common styles from css/card-common.css with .column-layout */
+    /* Specific padding for this card: */
+    padding: clamp(15px, 3vw, 25px);
+    /* text-align: center; is provided by .column-layout if needed, or can be overridden here */
+  }
+  .contact-title {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    color: var(--primary-color);
+    margin: 0 0 15px 0;
+    text-align: center;
+  }
+  .contact-links {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+  }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #444;
+    text-decoration: none;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    transition: color 0.2s ease, transform 0.15s ease;
+  }
+  .contact-link:hover {
+    color: var(--primary-color);
+    transform: translateY(-2px);
+  }
+</style>
+<div class="card-content-inner column-layout">
+  <h2 class="contact-title">Contact Me</h2>
+  <div class="contact-links">
+    <a href="mailto:me@dillonquigley.com" class="contact-link">
+      me@dillonquigley.com
+    </a>
+    <a href="https://github.com/dquigles" target="_blank" class="contact-link">
+      GitHub
+    </a>
+    <a href="https://linkedin.com/in/dillonquigley" target="_blank" class="contact-link">
+      LinkedIn
+    </a>
+  </div>
 </div>

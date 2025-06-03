@@ -137,6 +137,10 @@ export function animateCascadePick() {
   }, 300);
 }
 
+/* 
+// The following function animateCards() appears to be unused in the project.
+// No other files reference it or use the '.slide-target' class it queries.
+// Removing it to eliminate dead code.
 export function animateCards() {
   const cards = document.querySelectorAll(".slide-target");
   cards.forEach((card, i) => {
@@ -153,3 +157,4 @@ export function animateCards() {
     }, i * 100);
   });
 }
+*/

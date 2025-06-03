@@ -23,18 +23,12 @@
   overflow: hidden;
 }
 
-/* Basic styles for the direct content wrapper within .side-card */
-.side-card .card-content-inner {
-  width: 100%;
-  height: 100%;
-  display: flex; /* This allows content to be flex-formatted */
-  flex-direction: column;
-  justify-content: center; /* Default, card styles can override */
-  align-items: center; /* Default, card styles can override */
-  padding: 10px; /* Default inner padding, card styles can override */
-  box-sizing: border-box;
-  text-align: center; /* Default text-align, card styles can override */
-}
+/* 
+  The following .side-card .card-content-inner rule has been removed 
+  as its functionality is now covered by css/card-common.css which provides
+  more specific base styles for .card-content-inner and its variants (.column-layout, .full-link-container).
+  The individual cards in cards/*.html now use these common classes.
+*/
 
 /* General default for paragraphs inside cards, can be overridden by card-specific styles */
 .side-card .card-content-inner p {
