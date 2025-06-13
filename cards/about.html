@@ -19,25 +19,16 @@
     margin-bottom: 8px;
     color: #333;
   }
-  .learn-more-btn {
+  .about-link {
     display: inline-block;
-    background-color: var(--background-color);
-    color: var(--background-color);
-    padding: clamp(10px, 2vw, 12px) clamp(20px, 4vw, 25px); /* Responsive padding */
-    border-radius: 6px;
+    color: #444;
     text-decoration: none;
-    font-weight: bold;
     font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: color 0.2s ease, transform 0.15s ease;
   }
-  .learn-more-btn:hover,
-  .learn-more-btn:focus {
-    background-color: var(--spangram-color);
+  .about-link:hover {
     color: var(--primary-color);
-    transform: scale(1.03) translateY(-1px);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-    outline: none;
+    transform: translateY(-2px);
   }
 </style>
 <div class="card-content-inner column-layout">
@@ -47,5 +38,5 @@
     <li>Passion for Interactive Design & UX</li>
     <li>Lifelong Learner & Tech Enthusiast</li>
   </ul>
-  <a href="about.html" class="learn-more-btn" target="_blank">Learn More</a>
+  <a href="about.html" class="about-link" target="_blank">Learn More</a>
 </div> 

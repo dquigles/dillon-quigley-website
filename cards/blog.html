@@ -1,3 +1,22 @@
-<div class="card-content-inner full-link-container">
-  <a href="/blog.html" class="card-button-link" target="_blank">Blog</a>
-</div> 
+<style>
+  .blog-card-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #444;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.15s ease;
+  }
+  .blog-card-link:hover {
+    color: var(--primary-color);
+  }
+  .blog-text {
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    font-weight: 600;
+  }
+</style>
+<a href="/blog.html" class="blog-card-link" target="_blank">
+  <div class="card-content-inner column-layout">
+    <span class="blog-text">Blog</span>
+  </div>
+</a> 

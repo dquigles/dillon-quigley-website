@@ -1,3 +1,22 @@
-<div class="card-content-inner full-link-container">
-  <a href="../assets/DillonQuigleyResume.pdf" class="card-button-link" target="_blank" download>Resume.pdf</a>
-</div> 
+<style>
+  .resume-card-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #444;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.15s ease;
+  }
+  .resume-card-link:hover {
+    color: var(--primary-color);
+  }
+  .resume-text {
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    font-weight: 600;
+  }
+</style>
+<a href="../assets/DillonQuigleyResume.pdf" class="resume-card-link" target="_blank" download>
+  <div class="card-content-inner column-layout">
+    <span class="resume-text">Resume.pdf</span>
+  </div>
+</a> 
