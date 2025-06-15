@@ -36,7 +36,7 @@ export async function createSideCard(word) {
   card.id = `card-${word}`;
 
   try {
-    const response = await fetch(`cards/${word.toLowerCase()}.html`);
+    const response = await fetch(`cards/${word.toLowerCase()}Card.html`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
